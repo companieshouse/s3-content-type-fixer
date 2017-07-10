@@ -1,5 +1,5 @@
 import requests
-from boto.s3.connection import S3Connection
+from boto.s3.connection import S3Connection, NoHostProvided
 import argparse
 import multiprocessing
 import sys
@@ -14,9 +14,12 @@ def find_matching_files(bucket, prefixes):
     """
     return set(key for prefix in prefixes for key in bucket.list(prefix))
 
-def get_bucket(access_key, secret_key, bucket):
+def get_bucket(access_key, secret_key, bucket, region=None):
     """Gets an S3 bucket"""
-    return S3Connection(access_key, secret_key).get_bucket(bucket)
+
+    host = 's3-%s.amazonaws.com' % region if region != None else NoHostProvided
+
+    return S3Connection(access_key, secret_key, host=host).get_bucket(bucket)
 
 def check_headers(bucket, queue, verbose, dryrun):
     """
@@ -69,11 +72,12 @@ def main():
     parser.add_argument("--workers", "-w", type=int, default=4, required=False, help="The number of workers")
     parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
     parser.add_argument("--dryrun", "-d", action="store_true", default=False, required=False,help="Add this for a dry run (don't change any file)")
+    parser.add_argument("--region", "-r", type=str, default=None, required=False, help="S3 region (e.g.: `us-east-1`)")
 
     args = parser.parse_args()
     queue = multiprocessing.Queue()
     processes = []
-    bucket = get_bucket(args.access_key, args.secret_key, args.bucket)
+    bucket = get_bucket(args.access_key, args.secret_key, args.bucket, args.region)
 
     # Start the workers
     for _ in xrange(args.workers):
