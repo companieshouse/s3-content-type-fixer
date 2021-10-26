@@ -5,6 +5,9 @@ import multiprocessing
 import sys
 import mimetypes
 
+mimetypes.add_type('text/html', '.shtml')
+mimetypes.add_type('application/xml', '.xsd')
+
 BLOCK_TIME = 60 * 60
 
 def find_matching_files(bucket, prefixes):
@@ -91,7 +94,7 @@ def main():
     
     # Add the items to the queue
     for key in find_matching_files(bucket, args.prefixes):
-        queue.put(key.name)
+        queue.put(key)
 
     # Add None's to the end of the queue, which acts as a signal for the
     # proceses to finish
