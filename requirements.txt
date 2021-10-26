@@ -1,2 +1,2 @@
-boto==1.19.3
+boto3
 requests==1.1.0
