@@ -1,7 +1,7 @@
 # S3 Content Type Fixer #
 
 This script will scan an S3 bucket to find files with bad content-types and
-fix them.
+fix them using python3.
 
 To run the script, first install the dependencies:
 
