@@ -21,7 +21,8 @@ def get_bucket(region, access_key, secret_key, bucket):
       region_name=region,
       aws_access_key_id=access_key,
       aws_secret_access_key=secret_key
-    
+    )
+
    return s3.Bucket(bucket)
 )
 
@@ -69,6 +70,7 @@ def check_headers(bucket, queue, verbose, dryrun):
 def main():
     parser = argparse.ArgumentParser(description="Fixes the content-type of assets on S3")
 
+    parser.add_argument("--region", "-r", type=str, default="eu-west-2", required=True, help="The region name")
     parser.add_argument("--access-key", "-a", type=str, required=True, help="The AWS access key")
     parser.add_argument("--secret-key", "-s", type=str, required=True, help="The AWS secret key")
     parser.add_argument("--bucket", "-b", type=str, required=True, help="The S3 bucket to check")
