@@ -1,5 +1,5 @@
 import requests
-from boto.s3.connection import S3Connection
+import boto3
 import argparse
 import multiprocessing
 import sys
@@ -14,9 +14,16 @@ def find_matching_files(bucket, prefixes):
     """
     return set(key for prefix in prefixes for key in bucket.list(prefix))
 
-def get_bucket(access_key, secret_key, bucket):
+def get_bucket(region, access_key, secret_key, bucket):
     """Gets an S3 bucket"""
-    return S3Connection(access_key, secret_key).get_bucket(bucket)
+    s3 = boto3.resource(
+      service_name='s3',
+      region_name=region,
+      aws_access_key_id=access_key,
+      aws_secret_access_key=secret_key
+    
+   return s3.Bucket(bucket)
+)
 
 def check_headers(bucket, queue, verbose, dryrun):
     """
@@ -40,7 +47,7 @@ def check_headers(bucket, queue, verbose, dryrun):
             continue
 
         content_type = key.content_type
-        expected_content_type, _ = mimetypes.guess_type(key.name)
+        expected_content_type, _ = mimetypes.guess_type(key.name, strict=False)
 
         if not expected_content_type:
             print("%s: Could not guess content type" % key.name, file=sys.stderr)
@@ -73,7 +80,7 @@ def main():
     args = parser.parse_args()
     queue = multiprocessing.Queue()
     processes = []
-    bucket = get_bucket(args.access_key, args.secret_key, args.bucket)
+    bucket = get_bucket(args.region, args.access_key, args.secret_key, args.bucket)
 
     # Start the workers
     for _ in range(args.workers):
