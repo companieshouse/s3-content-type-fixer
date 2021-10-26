@@ -1,5 +1,5 @@
 import requests
-from boto.s3.connection import S3Connection
+from boto3.s3.connection import S3Connection
 import argparse
 import multiprocessing
 import sys
@@ -40,7 +40,7 @@ def check_headers(bucket, queue, verbose, dryrun):
             continue
 
         content_type = key.content_type
-        expected_content_type, _ = mimetypes.guess_type(key.name)
+        expected_content_type, _ = mimetypes.guess_type(key.name, strict=False)
 
         if not expected_content_type:
             print("%s: Could not guess content type" % key.name, file=sys.stderr)
