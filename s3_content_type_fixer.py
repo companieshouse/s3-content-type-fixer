@@ -12,7 +12,7 @@ def find_matching_files(bucket, prefixes):
     Returns a set of files in a given S3 bucket that match the specificed file
     path prefixes
     """
-    return set(key for prefix in prefixes for key in bucket.list(prefix))
+    return set(key for prefix in prefixes for key in bucket.objects.filter(Prefix=prefix))
 
 def get_bucket(region, access_key, secret_key, bucket):
     """Gets an S3 bucket"""
