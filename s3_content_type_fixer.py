@@ -36,21 +36,21 @@ def check_headers(bucket, queue, verbose, dryrun):
         key = bucket.lookup(key_name)
 
         if not key:
-            print >> sys.stderr, "%s: Could not lookup" % key.name
+            print("%s: Could not lookup" % key.name, file=sys.stderr)
             continue
 
         content_type = key.content_type
         expected_content_type, _ = mimetypes.guess_type(key.name)
 
         if not expected_content_type:
-            print >> sys.stderr, "%s: Could not guess content type" % key.name
+            print("%s: Could not guess content type" % key.name, file=sys.stderr)
             continue
 
         if content_type == expected_content_type:
             if verbose:
-                print "%s: Matches expected content type" % key.name
+                print("%s: Matches expected content type" % key.name)
         else:
-            print "%s: Current content type (%s) does not match expected (%s); fixing" % (key.name, content_type, expected_content_type)
+            print("%s: Current content type (%s) does not match expected (%s); fixing" % (key.name, content_type, expected_content_type))
             if not dryrun:
                 metadata = {"Content-Type": expected_content_type}
 
@@ -76,7 +76,7 @@ def main():
     bucket = get_bucket(args.access_key, args.secret_key, args.bucket)
 
     # Start the workers
-    for _ in xrange(args.workers):
+    for _ in range(args.workers):
         p = multiprocessing.Process(target=check_headers, args=(bucket, queue, args.verbose, args.dryrun))
         p.start()
         processes.append(p)
@@ -87,7 +87,7 @@ def main():
 
     # Add None's to the end of the queue, which acts as a signal for the
     # proceses to finish
-    for _ in xrange(args.workers):
+    for _ in range(args.workers):
         queue.put(None)
 
     for p in processes:
