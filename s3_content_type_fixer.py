@@ -16,13 +16,14 @@ def find_matching_files(bucket, prefixes):
 
 def get_bucket(region, access_key, secret_key, bucket):
     """Gets an S3 bucket"""
-    client = boto3.client(
-      's3',
+    session = boto3.Session(
       region_name=region,
       aws_access_key_id=access_key,
       aws_secret_access_key=secret_key,
     )
-    return client.bucket(bucket)
+
+    s3 = session.resource('s3')
+    return s3.Bucket(bucket)
 
 def check_headers(bucket, queue, verbose, dryrun):
     """
