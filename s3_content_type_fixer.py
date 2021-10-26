@@ -23,7 +23,6 @@ def get_bucket(region, access_key, secret_key, bucket):
       aws_secret_access_key=secret_key
     )
     return s3.Bucket(bucket)
-)
 
 def check_headers(bucket, queue, verbose, dryrun):
     """
