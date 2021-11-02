@@ -1,6 +1,6 @@
 # S3 Content Type Fixer #
 
-This script will upload files to S3 with Python3 keeping the original folder structure with correct MIME type
+This script will upload content to S3 with Python3 keeping the original folder structure with correct MIME type
 
 To run the script, first install the dependencies:
 
