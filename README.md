@@ -1,7 +1,6 @@
 # S3 Content Type Fixer #
 
-This script will scan an S3 bucket to find files with bad content-types and
-fix them using python3.
+This script will upload files to S3 with Python3 keeping the original folder structure with correct MIME type
 
 To run the script, first install the dependencies:
 
@@ -9,4 +8,4 @@ To run the script, first install the dependencies:
 
 Then run the fixer:
 
-    python s3_content_type_fixer.py --access-key <your AWS access key> --secret-key <your AWS secret key> --bucket <your S3 bucket>
+    python3 s3_content_type_fixer.py --region_name <your AWS region> --access_key <your AWS access key> --secret_key <your AWS secret key> --bucket_name <your S3 bucket> --local_path <your local path>
