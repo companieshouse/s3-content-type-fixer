@@ -6,10 +6,10 @@ import mimetypes
 mimetypes.add_type('text/html', '.shtml')
 mimetypes.add_type('application/xml', '.xsd')
       
-def upload_files(region, accesskey, secretkey, bucket, path):
+def upload_files(region, accessKey, secretKey, bucket, path):
     session = boto3.Session(
         aws_access_key_id=accessKey,
-        aws_secret_access_key=secretkey,
+        aws_secret_access_key=secretKey,
         region_name=region
     )
     s3 = session.resource('s3')
