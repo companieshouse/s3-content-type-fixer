@@ -29,7 +29,7 @@ def main():
  parser.add_argument("--access-key", "-a", type=str, required=True, help="The AWS access key")
  parser.add_argument("--secret-key", "-s", type=str, required=True, help="The AWS secret key")
  parser.add_argument("--bucket-name", "-b", type=str, required=True, help="The S3 bucket to check")
- parser.add_argument("--local-path", "-b", type=str, required=True, help="The local path to scan for files to upload")
+ parser.add_argument("--local-path", "-p", type=str, required=True, help="The local path to scan for files to upload")
   
  args = parser.parse_args()
  upload_files(args.region-name, args.access-key, args.secret-key, args.bucket-name, args.local-path)
