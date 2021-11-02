@@ -20,6 +20,7 @@ def upload_files(region, accessKey, secretKey, bucket, path):
             full_path = os.path.join(subdir, file)
             file_mime = mimetypes.guess_type(file)[0] or 'binary/octet-stream'
             with open(full_path, 'rb') as data:
+                print(full_path)
                 bucket.put_object(Key=full_path[len(path)+1:], Body=data, ContentType=file_mime)
 
 def main():
@@ -32,7 +33,9 @@ def main():
  parser.add_argument("--local_path", "-p", type=str, required=True, help="The local path to scan for files to upload")
   
  args = parser.parse_args()
+ print("s3 upload started")
  upload_files(args.region_name, args.access_key, args.secret_key, args.bucket_name, args.local_path)
+ print("s3 upload completed")
 
 if __name__ == "__main__":
   main() 
