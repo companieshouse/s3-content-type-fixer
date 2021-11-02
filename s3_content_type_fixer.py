@@ -1,4 +1,5 @@
 import boto3
+import argparse
 import os
 import mimetypes
 
@@ -23,7 +24,7 @@ def upload_files(region, access_key, secret_key, bucket, path):
 
 def main():
  parser = argparse.ArgumentParser(description="Fixes the content-type of assets on S3")
- 
+
  parser.add_argument("--region-name", "-r", type=str, default="eu-west-2", required=True, help="The region name")
  parser.add_argument("--access-key", "-a", type=str, required=True, help="The AWS access key")
  parser.add_argument("--secret-key", "-s", type=str, required=True, help="The AWS secret key")
