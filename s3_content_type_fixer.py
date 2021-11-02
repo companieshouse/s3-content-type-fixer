@@ -6,10 +6,10 @@ import mimetypes
 mimetypes.add_type('text/html', '.shtml')
 mimetypes.add_type('application/xml', '.xsd')
       
-def upload_files(region, access_key, secret_key, bucket, path):
+def upload_files(region, accesskey, secretkey, bucket, path):
     session = boto3.Session(
-        aws_access_key_id=access_key,
-        aws_secret_access_key=secret_key,
+        aws_access_key_id=accessKey,
+        aws_secret_access_key=secretkey,
         region_name=region
     )
     s3 = session.resource('s3')
@@ -25,14 +25,14 @@ def upload_files(region, access_key, secret_key, bucket, path):
 def main():
  parser = argparse.ArgumentParser(description="Fixes the content-type of assets on S3")
 
- parser.add_argument("--region-name", "-r", type=str, default="eu-west-2", required=True, help="The region name")
- parser.add_argument("--access-key", "-a", type=str, required=True, help="The AWS access key")
- parser.add_argument("--secret-key", "-s", type=str, required=True, help="The AWS secret key")
- parser.add_argument("--bucket-name", "-b", type=str, required=True, help="The S3 bucket to check")
- parser.add_argument("--local-path", "-p", type=str, required=True, help="The local path to scan for files to upload")
+ parser.add_argument("--region_name", "-r", type=str, default="eu-west-2", required=True, help="The region name")
+ parser.add_argument("--access_key", "-a", type=str, required=True, help="The AWS access key")
+ parser.add_argument("--secret_key", "-s", type=str, required=True, help="The AWS secret key")
+ parser.add_argument("--bucket_name", "-b", type=str, required=True, help="The S3 bucket to check")
+ parser.add_argument("--local_path", "-p", type=str, required=True, help="The local path to scan for files to upload")
   
  args = parser.parse_args()
- upload_files(args.region-name, args.access-key, args.secret-key, args.bucket-name, args.local-path)
+ upload_files(args.region_name, args.access_key, args.secret_key, args.bucket_name, args.local_path)
 
 if __name__ == "__main__":
   main() 
